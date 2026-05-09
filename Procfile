@@ -1,1 +1,1 @@
-﻿web: cd gateway && python app.py
+﻿web: python app.py
