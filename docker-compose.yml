@@ -1,0 +1,28 @@
+﻿services:
+  lambda_hola:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ./lambda_hola:/app
+    command: ["sh","-c","pip install flask -q && python app.py"]
+    ports:
+      - "5001:5001"
+  lambda_chao:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ./lambda_chao:/app
+    command: ["sh","-c","pip install flask -q && python app.py"]
+    ports:
+      - "5002:5002"
+  gateway:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ./gateway:/app
+    command: ["sh","-c","pip install flask requests -q && python app.py"]
+    ports:
+      - "8000:8000"
+    depends_on:
+      - lambda_hola
+      - lambda_chao
